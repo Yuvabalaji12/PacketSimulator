@@ -8,18 +8,18 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.Map;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.network.Entity.ServerData;
 import org.network.packet.DataPacket;
 import org.network.packet.RetransmissionRequest;
-import org.network.util.Initial_Connection;
 import org.network.util.CheckSumUtil;
+import org.network.util.Initial_Connection;
 
 public class Server {
 
@@ -34,13 +34,16 @@ public class Server {
 			ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
             
 			soc.setSoTimeout(1200);
-
-			final int TOTAL_PACKETS = 2;
+        
+            DataPacket data = (DataPacket) in.readObject();
+			final long TOTAL_PACKETS =data.getTotalPackets();
             Map<Integer, DataPacket> receivedPackets = new TreeMap<>();
+            
 
         while (receivedPackets.size() < TOTAL_PACKETS) {
             try {
                 DataPacket packet = (DataPacket) in.readObject();
+                 
 
                 // Check SHA-256 integrity[cite: 1]
                 String calculatedHash = CheckSumUtil.calculateSHA256(packet.getPayloadChunk());
