@@ -7,10 +7,10 @@ public class DataPacket implements Serializable {
     
     private int sequenceNumber;
     private byte[] payloadChunk;
-    private final int totalPackets;
+    private final long totalPackets;
     private String checksum;
 
-    public DataPacket(int sequenceNumber,int totalPackets, byte[] payloadChunk, String checksum) {
+    public DataPacket(int sequenceNumber,long totalPackets, byte[] payloadChunk, String checksum) {
         this.sequenceNumber = sequenceNumber;
         this.payloadChunk = payloadChunk;
         this.totalPackets = totalPackets;
@@ -20,5 +20,5 @@ public class DataPacket implements Serializable {
     public int getSequenceNumber() { return sequenceNumber; }
     public byte[] getPayloadChunk() { return payloadChunk; }
     public String getChecksum() { return checksum; }
-    public int getTotalPackets() { return totalPackets; }
+    public long getTotalPackets() { return totalPackets; }
 }

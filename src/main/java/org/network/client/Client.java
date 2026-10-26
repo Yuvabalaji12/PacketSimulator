@@ -29,8 +29,9 @@ public class Client {
 		NetworkSimulator simulator = new NetworkSimulator();
         Map<Integer, DataPacket> storingPackets = new HashMap<>();
 		
-        final int TOTAL_PACKETS = 2;
-
+        final long TOTAL_PACKETS = s.createQuery("SELECT COUNT(*) FROM Data", Long.class).getSingleResult();
+        System.out.println("[CLIENT] Total packets to send: " + TOTAL_PACKETS);
+        
         // 1.Initial Packet sending
 		for(int i=1; i<=TOTAL_PACKETS; i++) {
 			Data data = s.find(Data.class,i);
